@@ -45,6 +45,10 @@ class VehicleDevice:
             and "sentry_mode_available" in data["vehicle_state"]
             and data["vehicle_state"]["sentry_mode_available"]
         )
+        self._rear_heated_seats_available: bool = (
+            "vehicle_config" in data
+            and data["vehicle_config"]["rear_seat_heaters"]
+        )
         self._controller = controller
         self.should_poll: bool = True
         self.type: Text = "device"
@@ -109,6 +113,11 @@ class VehicleDevice:
     def sentry_mode_available(self) -> bool:
         """Return True if sentry mode is available on this Vehicle."""
         return self._sentry_mode_available
+
+    @property
+    def rear_heated_seats_available(self) -> bool:
+        """Return True if rear heated seats are available on this Vehicle."""
+        return self._rear_heated_seats_available
 
     def assumed_state(self) -> bool:
         # pylint: disable=protected-access
